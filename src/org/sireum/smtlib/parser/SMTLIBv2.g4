@@ -34,7 +34,7 @@ grammar SMTLIBv2;
 
 
 Comment
-    : Semicolon ~[\r\n]* -> skip
+    : Semicolon ~[\r\n]* -> channel(HIDDEN)
     ;
 
 
@@ -1092,5 +1092,5 @@ general_response
 
 // Parser Rules End
 
-WS  :  [ \t\r\n]+ -> skip
+WS  :  [ \t\r\n]+ -> channel(HIDDEN)
     ;
