@@ -32,7 +32,7 @@ def regenSysML(): Unit = {
   val grammar = outDir / "SMTLIBv2.g4"
   grammar.downloadFrom("https://raw.githubusercontent.com/julianthome/smtlibv2-grammar/master/src/main/resources/SMTLIBv2.g4")
   grammar.writeOver(ops.StringOps(grammar.read).replaceAllLiterally("-> skip", "-> channel(HIDDEN)"))
-  val deps = Coursier.fetch(Sireum.scalaVer, ISZ(s"org.antlr:antlr4:$antlr4Version"))
+  val deps = Coursier.fetch(Sireum.scalaVer, ISZ(s"org.antlr:antlr4:$antlr4Version"), Coursier.Proxy.empty)
   val classpath: ISZ[String] = for (dep <- deps) yield dep.path.string
   val java = Os.path(Sireum.javaHomePathString) / "bin" / (if (Os.isWin) "java.exe" else "java")
   Os.proc(ISZ(java.string, "-cp", st"${(classpath, Os.pathSep)}".render, "org.antlr.v4.Tool", "-o",
